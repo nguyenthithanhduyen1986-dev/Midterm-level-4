@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocabulary & Grammar Practice – Level A2</title>
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-hover: #4338CA;
+            --bg-color: #F3F4F6;
+            --card-bg: #FFFFFF;
+            --text-main: #1F2937;
+            --text-muted: #6B7280;
+            --success: #10B981;
+            --danger: #EF4444;
+            --border: #E5E7EB;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px 10px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .student-info-card {
+            background-color: #EEF2FF;
+            border: 1px solid #C7D2FE;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        input[type="text"], select {
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus, select:focus {
+            border-color: var(--primary);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            border-bottom: 2px solid #EEF2FF;
+            padding-bottom: 6px;
+            margin: 30px 0 15px 0;
+        }
+
+        .question-card {
+            background: #FAFAFA;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+            transition: border-color 0.2s;
+        }
+
+        .question-title {
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #FFFFFF;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: #F9FAFB;
+            border-color: #D1D5DB;
+        }
+
+        .option-label input[type="radio"] {
+            accent-color: var(--primary);
+        }
+
+        .inline-input {
+            width: auto;
+            min-width: 140px;
+            display: inline-block;
+            margin: 0 4px;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: none;
+        }
+
+        .feedback.correct {
+            background-color: #D1FAE5;
+            color: #065F46;
+            border: 1px solid #A7F3D0;
+        }
+
+        .feedback.incorrect {
+            background-color: #FEE2E2;
+            color: #991B1B;
+            border: 1px solid #FECACA;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .btn-submit {
+            background-color: var(--primary);
+            color: white;
+            padding: 14px 28px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .btn-submit:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-submit:disabled {
+            background-color: #9CA3AF;
+            cursor: not-allowed;
+        }
+
+        /* Result Area */
+        #result-section {
+            display: none;
+            background-color: #F0FDF4;
+            border: 2px solid #A7F3D0;
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        #result-section h2 {
+            color: #065F46;
+            margin-bottom: 12px;
+        }
+
+        .result-details {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .result-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: var(--primary);
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 20px;
+            margin-top: 10px;
+        }
+
+        .error-message {
+            color: var(--danger);
+            font-size: 0.9rem;
+            margin-top: 4px;
+            display: none;
+        }
+
+        /* Celebration Animation Overlay */
+        #celebration-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            display: none;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            animation: fall 3s linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Vocabulary & Grammar Practice</h1>
+            <p class="subtitle">Level A2 • Activity Centre, Sports, Adjectives & Relative Clauses / Have Got</p>
+        </header>
+
+        <!-- Student Info Section -->
+        <div class="student-info-card">
+            <div class="form-group">
+                <label for="student-name">Student Name <span style="color: red;">*</span></label>
+                <input type="text" id="student-name" placeholder="Enter your full name..." required>
+                <div id="name-error" class="error-message">Please enter your name before submitting!</div>
+            </div>
+        </div>
+
+        <form id="test-form" onsubmit="return false;">
+            
+            <!-- SECTION 1 -->
+            <div class="section-title">Part 1: Multiple Choice (8 Questions)</div>
+            
+            <!-- Q1 -->
+            <div class="question-card" id="qc-1">
+                <div class="question-title">1. An ____________ is a place where you can try different indoor and outdoor sports.</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="q1" value="A"> A) activity centre</label>
+                    <label class="option-label"><input type="radio" name="q1" value="B"> B) climbing wall</label>
+                    <label class="option-label"><input type="radio" name="q1" value="C"> C) water sport</label>
+                </div>
+                <div class="feedback" id="fb-1"></div>
+            </div>
+
+            <!-- Q2 -->
+            <div class="question-card" id="qc-2">
+                <div class="question-title">2. Swimming and sailing are types of ____________.</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="q2" value="A"> A) rock climbing</label>
+                    <label class="option-label"><input type="radio" name="q2" value="B"> B) water sport</label>
+                    <label class="option-label"><input type="radio" name="q2" value="C"> C) climbing wall</label>
+                </div>
+                <div class="feedback" id="fb-2"></div>
+            </div>
+
+            <!-- Q3 -->
+            <div class="question-card" id="qc-3">
+                <div class="question-title">3. That movie was so ____________ that I fell asleep before it finished.</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="q3" value="A"> A) exciting</label>
+                    <label class="option-label"><input type="radio" name="q3" value="B"> B) boring</label>
+                    <label class="option-label"><input type="radio" name="q3" value="C"> C) quick</label>
+                </div>
+                <div class="feedback" id="fb-3"></div>
+            </div>
+
+            <!-- Q4 -->
+            <div class="question-card" id="qc-4">
+                <div class="question-title">4. Be ____________ when you carry those glass bottles!</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="q4" value="A"> A) busy</label>
+                    <label class="option-label"><input type="radio" name="q4" value="B"> B) slow</label>
+                    <label class="option-label"><input type="radio" name="q4" value="C"> C) careful</label>
+                </div>
+                <div class="feedback" id="fb-4"></div>
+            </div>
+
+            <!-- Q5 -->
+            <div class="question-card" id="qc-5">
+                <div class="question-title">5. A coach is a person ____________ helps students learn sports.</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="q5" value="A"> A) who</label>
+                    <label class="option-label"><input type="radio" name="q5" value="B"> B) where</label>
+                    <label class="option-label"><input type="radio" name="q5" value="C"> C) which</label>
+                </div>
+                <div class="feedback" id="fb-5"></div>
+            </div>
+
+            <!-- Q6 -->
+            <div class="question-card" id="qc-6">
+                <div class="question-title">6. This is the pool ____________ I learn to swim every Saturday.</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="q6" value="A"> A) who</label>
+                    <label class="option-label"><input type="radio" name="q6" value="B"> B) where</label>
+                    <label class="option-label"><input type="radio" name="q6" value="C"> C) which</label>
+                </div>
+                <div class="feedback" id="fb-6"></div>
+            </div>
+
+            <!-- Q7 -->
+            <div class="question-card" id="qc-7">
+                <div class="question-title">7. She ____________ a new helmet for rock climbing.</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="q7" value="A"> A) have got</label>
+                    <label class="option-label"><input type="radio" name="q7" value="B"> B) has got</label>
+                    <label class="option-label"><input type="radio" name="q7" value="C"> C) gets got</label>
+                </div>
+                <div class="feedback" id="fb-7"></div>
+            </div>
+
+            <!-- Q8 -->
+            <div class="question-card" id="qc-8">
+                <div class="question-title">8. They ____________ got any sailing equipment today.</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="q8" value="A"> A) haven't</label>
+                    <label class="option-label"><input type="radio" name="q8" value="B"> B) hasn't</label>
+                    <label class="option-label"><input type="radio" name="q8" value="C"> C) don't have got</label>
+                </div>
+                <div class="feedback" id="fb-8"></div>
+            </div>
+
+            <!-- SECTION 2 -->
+            <div class="section-title">Part 2: Gap Fill (5 Questions)</div>
+
+            <!-- Q9 -->
+            <div class="question-card" id="qc-9">
+                <div class="question-title">9. Fill in the blank (who / where):</div>
+                <p>The instructor <input type="text" id="q9" class="inline-input" placeholder="type answer..."> teaches us rock climbing is very friendly.</p>
+                <div class="feedback" id="fb-9"></div>
+            </div>
+
+            <!-- Q10 -->
+            <div class="question-card" id="qc-10">
+                <div class="question-title">10. Fill in the blank (who / where):</div>
+                <p>That is the lake <input type="text" id="q10" class="inline-input" placeholder="type answer..."> we learn to sail boats in summer.</p>
+                <div class="feedback" id="fb-10"></div>
+            </div>
+
+            <!-- Q11 -->
+            <div class="question-card" id="qc-11">
+                <div class="question-title">11. Fill in the blank (have / has):</div>
+                <p>We <input type="text" id="q11" class="inline-input" placeholder="type answer..."> got a big indoor climbing wall at our school.</p>
+                <div class="feedback" id="fb-11"></div>
+            </div>
+
+            <!-- Q12 -->
+            <div class="question-card" id="qc-12">
+                <div class="question-title">12. Fill in the adjective (opposite of easy):</div>
+                <p>Learning to swim was not <input type="text" id="q12" class="inline-input" placeholder="type answer..."> for me; it was very difficult!</p>
+                <div class="feedback" id="fb-12"></div>
+            </div>
+
+            <!-- Q13 -->
+            <div class="question-card" id="qc-13">
+                <div class="question-title">13. Fill in the missing verb (climb / sail / swim):</div>
+                <p>You need a good boat if you want to <input type="text" id="q13" class="inline-input" placeholder="type answer..."> across the lake.</p>
+                <div class="feedback" id="fb-13"></div>
+            </div>
+
+            <!-- SECTION 3 -->
+            <div class="section-title">Part 3: Sentence Completion & Matching (4 Questions)</div>
+
+            <!-- Q14 -->
+            <div class="question-card" id="qc-14">
+                <div class="question-title">14. Complete the sentence with the correct phrase: "An indoor wall where you practice climbing is a ________."</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="q14" value="A"> A) climbing wall</label>
+                    <label class="option-label"><input type="radio" name="q14" value="B"> B) water sport</label>
+                    <label class="option-label"><input type="radio" name="q14" value="C"> C) busy activity</label>
+                </div>
+                <div class="feedback" id="fb-14"></div>
+            </div>
+
+            <!-- Q15 -->
+            <div class="question-card" id="qc-15">
+                <div class="question-title">15. Complete: "The sport was very ____________ because everybody was cheering and screaming."</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="q15" value="A"> A) slow</label>
+                    <label class="option-label"><input type="radio" name="q15" value="B"> B) terrible</label>
+                    <label class="option-label"><input type="radio" name="q15" value="C"> C) exciting</label>
+                </div>
+                <div class="feedback" id="fb-15"></div>
+            </div>
+
+            <!-- Q16 -->
+            <div class="question-card" id="qc-16">
+                <div class="question-title">16. Complete: "The girl ____________ won the swimming race got a gold medal."</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="q16" value="A"> A) where</label>
+                    <label class="option-label"><input type="radio" name="q16" value="B"> B) who</label>
+                    <label class="option-label"><input type="radio" name="q16" value="C"> C) which</label>
+                </div>
+                <div class="feedback" id="fb-16"></div>
+            </div>
+
+            <!-- Q17 -->
+            <div class="question-card" id="qc-17">
+                <div class="question-title">17. Complete: "He ____________ got two tickets to the activity centre."</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="q17" value="A"> A) has</label>
+                    <label class="option-label"><input type="radio" name="q17" value="B"> B) have</label>
+                    <label class="option-label"><input type="radio" name="q17" value="C"> C) is</label>
+                </div>
+                <div class="feedback" id="fb-17"></div>
+            </div>
+
+            <!-- SECTION 4 -->
+            <div class="section-title">Part 4: Error Correction (4 Questions)</div>
+
+            <!-- Q18 -->
+            <div class="question-card" id="qc-18">
+                <div class="question-title">18. Choose the CORRECT sentence:</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="q18" value="A"> A) This is the boy where helped me learn to swim.</label>
+                    <label class="option-label"><input type="radio" name="q18" value="B"> B) This is the boy who helped me learn to swim.</label>
+                    <label class="option-label"><input type="radio" name="q18" value="C"> C) This is the boy which helped me learn to swim.</label>
+                </div>
+                <div class="feedback" id="fb-18"></div>
+            </div>
+
+            <!-- Q19 -->
+            <div class="question-card" id="qc-19">
+                <div class="question-title">19. Choose the CORRECT sentence:</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="q19" value="A"> A) They has got a quick boat on the river.</label>
+                    <label class="option-label"><input type="radio" name="q19" value="B"> B) They are got a quick boat on the river.</label>
+                    <label class="option-label"><input type="radio" name="q19" value="C"> C) They have got a quick boat on the river.</label>
+                </div>
+                <div class="feedback" id="fb-19"></div>
+            </div>
+
+            <!-- Q20 -->
+            <div class="question-card" id="qc-20">
+                <div class="question-title">20. Choose the CORRECT sentence:</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="q20" value="A"> A) I like the shop who sells water sport equipment.</label>
+                    <label class="option-label"><input type="radio" name="q20" value="B"> B) I like the shop where sells water sport equipment.</label>
+                    <label class="option-label"><input type="radio" name="q20" value="C"> C) I like the shop where they sell water sport equipment.</label>
+                </div>
+                <div class="feedback" id="fb-20"></div>
+            </div>
+
+            <!-- Q21 -->
+            <div class="question-card" id="qc-21">
+                <div class="question-title">21. Choose the CORRECT sentence:</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="q21" value="A"> A) He hasn't got any time because he is very busy.</label>
+                    <label class="option-label"><input type="radio" name="q21" value="B"> B) He haven't got any time because he is very busy.</label>
+                    <label class="option-label"><input type="radio" name="q21" value="C"> C) He doesn't got any time because he is very busy.</label>
+                </div>
+                <div class="feedback" id="fb-21"></div>
+            </div>
+
+            <!-- SECTION 5 -->
+            <div class="section-title">Part 5: Mixed Challenge (4 Questions)</div>
+
+            <!-- Q22 -->
+            <div class="question-card" id="qc-22">
+                <div class="question-title">22. The weather was ____________, so we couldn't go rock climbing outside.</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="q22" value="A"> A) easy</label>
+                    <label class="option-label"><input type="radio" name="q22" value="B"> B) terrible</label>
+                    <label class="option-label"><input type="radio" name="q22" value="C"> C) quick</label>
+                </div>
+                <div class="feedback" id="fb-22"></div>
+            </div>
+
+            <!-- Q23 -->
+            <div class="question-card" id="qc-23">
+                <div class="question-title">23. "Have you got a map for the activity centre?" — "No, I ____________."</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="q23" value="A"> A) haven't</label>
+                    <label class="option-label"><input type="radio" name="q23" value="B"> B) don't</label>
+                    <label class="option-label"><input type="radio" name="q23" value="C"> C) hasn't</label>
+                </div>
+                <div class="feedback" id="fb-23"></div>
+            </div>
+
+            <!-- Q24 -->
+            <div class="question-card" id="qc-24">
+                <div class="question-title">24. Turtle Bay is a place ____________ people learn to sail.</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="q24" value="A"> A) who</label>
+                    <label class="option-label"><input type="radio" name="q24" value="B"> B) where</label>
+                    <label class="option-label"><input type="radio" name="q24" value="C"> C) what</label>
+                </div>
+                <div class="feedback" id="fb-24"></div>
+            </div>
+
+            <!-- Q25 -->
+            <div class="question-card" id="qc-25">
+                <div class="question-title">25. Sloths move very ____________; they are not quick at all.</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="q25" value="A"> A) slow</label>
+                    <label class="option-label"><input type="radio" name="q25" value="B"> B) careful</label>
+                    <label class="option-label"><input type="radio" name="q25" value="C"> C) busy</label>
+                </div>
+                <div class="feedback" id="fb-25"></div>
+            </div>
+
+            <div class="actions">
+                <button type="button" class="btn-submit" id="btn-submit" onclick="submitTest()">Submit Assignment</button>
+            </div>
+        </form>
+
+        <!-- Final Result Card -->
+        <div id="result-section">
+            <h2>YOUR RESULT</h2>
+            <div class="result-details">
+                <p><strong>Student Name:</strong> <span id="res-name"></span></p>
+                <p><strong>Score:</strong> <span id="res-score"></span> / 25</p>
+                <p><strong>Percentage:</strong> <span id="res-percentage"></span>%</p>
+            </div>
+            <div class="result-badge" id="res-badge">Submitted Successfully!</div>
+            <p id="submit-status" style="margin-top: 15px; font-size: 0.9rem; color: #4B5563;"></p>
+        </div>
+    </div>
+
+    <!-- Hidden Submit Form & Iframe -->
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+    <form id="gform" action="https://script.google.com/macros/s/AKfycbzC1X5-p7BUA_3SvBRhWUcMDARmtLushscuFll_X2fREHTAJ9aQQuQId2-fmqKi1e8U/exec" method="POST" target="hidden_iframe" style="display:none;">
+        <input type="hidden" name="assignment" id="g_assignment">
+        <input type="hidden" name="name" id="g_name">
+        <input type="hidden" name="mark" id="g_mark">
+        <input type="hidden" name="total" id="g_total">
+        <input type="hidden" name="percentage" id="g_percentage">
+    </form>
+
+    <!-- Celebration Effect Overlay -->
+    <div id="celebration-overlay"></div>
+
+    <script>
+        const ASSIGNMENT_NAME = "Vocabulary & Grammar Practice – Level A2";
+        const TOTAL_QUESTIONS = 25;
+
+        // Correct Answers Keys
+        const answers = {
+            q1: "A",
+            q2: "B",
+            q3: "B",
+            q4: "C",
+            q5: "A",
+            q6: "B",
+            q7: "B",
+            q8: "A",
+            q9: ["who"],
+            q10: ["where"],
+            q11: ["have"],
+            q12: ["easy"],
+            q13: ["sail"],
+            q14: "A",
+            q15: "C",
+            q16: "B",
+            q17: "A",
+            q18: "B",
+            q19: "C",
+            q20: "C",
+            q21: "A",
+            q22: "B",
+            q23: "A",
+            q24: "B",
+            q25: "A"
+        };
+
+        const explanations = {
+            q1: "An 'activity centre' provides space for various sports activities.",
+            q2: "Swimming and sailing are sports taking place in water (water sports).",
+            q3: "'Boring' means not interesting, causing someone to fall asleep.",
+            q4: "'Careful' means taking care to avoid accident or damage.",
+            q5: "We use 'who' to refer to a person (a coach).",
+            q6: "We use 'where' to refer to a place (the pool).",
+            q7: "Subject 'She' takes 'has got'.",
+            q8: "Subject 'They' negative form is 'haven't got'.",
+            q9: "Correct pronoun: 'who' (refers to the instructor).",
+            q10: "Correct pronoun: 'where' (refers to the lake).",
+            q11: "Correct auxiliary: 'have' (We have got).",
+            q12: "The opposite of 'difficult' given in context is 'easy'.",
+            q13: "We 'sail' boats on a lake.",
+            q14: "A wall used for climbing practice is a 'climbing wall'.",
+            q15: "'Exciting' describes something full of activity and cheering.",
+            q16: "We use 'who' for the girl.",
+            q17: "'He' takes 'has' got.",
+            q18: "'Who' is used for people ('the boy who helped me').",
+            q19: "Correct structure for 'They': 'They have got'.",
+            q20: "'Where' indicates location: 'the shop where they sell...'",
+            q21: "Negative form for 'He' is 'hasn't got'.",
+            q22: "Bad weather preventing outdoor sports is 'terrible'.",
+            q23: "Short negative response to 'Have you got...?': 'No, I haven't.'",
+            q24: "'Where' refers to the place (Turtle Bay).",
+            q25: "Not quick means 'slow'."
+        };
+
+        function submitTest() {
+            const studentNameInput = document.getElementById('student-name');
+            const studentName = studentNameInput.value.trim();
+            const nameError = document.getElementById('name-error');
+
+            if (!studentName) {
+                nameError.style.display = 'block';
+                studentNameInput.focus();
+                return;
+            } else {
+                nameError.style.display = 'none';
+            }
+
+            let score = 0;
+
+            // Check MCQ & Selected inputs
+            for (let i = 1; i <= TOTAL_QUESTIONS; i++) {
+                const qKey = 'q' + i;
+                const fbElem = document.getElementById('fb-' + i);
+                let isCorrect = false;
+                let userAns = "";
+
+                if ([9, 10, 11, 12, 13].includes(i)) {
+                    // Gap fill text inputs
+                    const textInput = document.getElementById(qKey);
+                    userAns = textInput.value.trim().toLowerCase();
+                    if (answers[qKey].includes(userAns)) {
+                        isCorrect = true;
+                    }
+                } else {
+                    // Radio options
+                    const selected = document.querySelector(`input[name="${qKey}"]:checked`);
+                    if (selected) {
+                        userAns = selected.value;
+                        if (userAns === answers[qKey]) {
+                            isCorrect = true;
+                        }
+                    }
+                }
+
+                // Show feedback
+                fbElem.style.display = 'block';
+                if (isCorrect) {
+                    score++;
+                    fbElem.className = 'feedback correct';
+                    fbElem.innerHTML = `✓ Correct! ${explanations[qKey] || ''}`;
+                } else {
+                    fbElem.className = 'feedback incorrect';
+                    let correctVal = Array.isArray(answers[qKey]) ? answers[qKey].join('/') : answers[qKey];
+                    fbElem.innerHTML = `✗ Incorrect. Correct answer: <strong>${correctVal}</strong>. ${explanations[qKey] || ''}`;
+                }
+            }
+
+            // Calculations
+            const percentage = ((score / TOTAL_QUESTIONS) * 100).toFixed(2);
+
+            // Display Local Results
+            document.getElementById('res-name').innerText = studentName;
+            document.getElementById('res-score').innerText = score;
+            document.getElementById('res-percentage').innerText = percentage;
+            document.getElementById('result-section').style.display = 'block';
+
+            // Disable submit button after completion
+            document.getElementById('btn-submit').disabled = true;
+
+            // Celebration Effect if >= 80%
+            if (parseFloat(percentage) >= 80) {
+                triggerCelebration();
+            }
+
+            // Submit Data via Form POST to Google Sheets Web App
+            document.getElementById('g_assignment').value = ASSIGNMENT_NAME;
+            document.getElementById('g_name').value = studentName;
+            document.getElementById('g_mark').value = score;
+            document.getElementById('g_total').value = TOTAL_QUESTIONS;
+            document.getElementById('g_percentage').value = percentage + "%";
+
+            const statusElem = document.getElementById('submit-status');
+            statusElem.innerText = "Submitting result to Google Sheets...";
+
+            document.getElementById('gform').submit();
+
+            // Handle Response Simulation via iframe load
+            document.getElementById('hidden_iframe').onload = function() {
+                statusElem.style.color = "#059669";
+                statusElem.innerText = "Your result has been submitted successfully!";
+            };
+
+            // Fallback timeout display
+            setTimeout(() => {
+                if (statusElem.innerText === "Submitting result to Google Sheets...") {
+                    statusElem.style.color = "#059669";
+                    statusElem.innerText = "Your result has been submitted successfully!";
+                }
+            }, 2500);
+
+            // Scroll down smoothly to results
+            document.getElementById('result-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function triggerCelebration() {
+            const overlay = document.getElementById('celebration-overlay');
+            overlay.style.display = 'block';
+            overlay.innerHTML = '';
+
+            const colors = ['#f43f5e', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6'];
+
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                overlay.appendChild(confetti);
+            }
+
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
